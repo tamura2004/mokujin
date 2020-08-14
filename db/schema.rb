@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_124236) do
   create_table "allocs", force: :cascade do |t|
     t.integer "assign_id", null: false
     t.date "month"
-    t.integer "cost"
+    t.decimal "cost", precision: 6, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["assign_id"], name: "index_allocs_on_assign_id"

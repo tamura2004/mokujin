@@ -3,7 +3,7 @@ class CreateAllocs < ActiveRecord::Migration[6.0]
     create_table :allocs do |t|
       t.references :assign, null: false, foreign_key: true
       t.date :month
-      t.integer :cost
+      t.decimal :cost, precision: 6, scale: 2
 
       t.timestamps
     end

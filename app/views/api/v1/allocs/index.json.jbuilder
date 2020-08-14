@@ -1,10 +1,34 @@
-json.data [
-  ["", "Tesla", "Volvo", "Toyota", "Ford"],
-  ["2019", 10, 11, 12, 13],
-  ["2020", 20, 11, 14, 13],
-  ["2021", 30, 15, 12, 13]
-]
+# dataおよびcolumnsはHandsontableのオプション名
 
-json.rowHeaders true
-json.colHeaders true
-json.licenseKey "non-commercial-and-evaluation"
+json.columns do
+  json.child! do
+    json.title "project_id"
+    json.data "project_id"
+  end
+  json.child! do
+    json.title "案件"
+    json.data "project"
+  end
+  json.array! @months do |month|
+    json.title month
+    json.data month + ".cost"
+    json.type "numeric"
+    json.numericFormat do
+      json.pattern "0.0"
+    end
+  end
+end
+
+json.data do
+  json.array! @allocs.group_by(&:project_name) do |project_name, allocs|
+    json.project_id allocs[0].project_id
+    json.project project_name
+    allocs.each do |alloc|
+      json.set! alloc.month.strftime("%m月") do
+        json.id alloc.alloc_id
+        json.cost alloc.cost
+      end
+    end
+  end
+end
+

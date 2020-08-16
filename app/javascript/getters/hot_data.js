@@ -5,6 +5,7 @@ export default function hot_data({ assigns }) {
   for (const assign of assigns) {
     const key = assign.project_name;
     if (!acc[key]) acc[key] = { project_name: key };
+    if (assign.month === null) continue;
     const month = dayjs(assign.month).format("MM月");
     acc[key][month] = {
       alloc_id: assign.alloc_id,

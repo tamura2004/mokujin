@@ -1,6 +1,6 @@
 import hot_columns  from "getters/hot_columns";
 
-test("generate handsontable column settings correctly", () => {
+test("generate handsontable settings columns", () => {
   const got = hot_columns("2020-08-16");
 
   const want = [

@@ -37,6 +37,7 @@ export default {
     afterChange(changes, source) {
       console.log(changes, source);
       if (source !== "edit") return;
+
       const rows = this.hot.getSourceData();
       for (const [row, name, oldVal, newVal] of changes) {
         // name := "10月.cost" -> col := "10月"

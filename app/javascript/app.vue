@@ -1,70 +1,34 @@
 <template>
   <div id="app">
-    <hot-table
-      ref="hot"
-      :columns="hot_columns"
-      :data="hot_data"
-      :colHeaders="true"
-      licenseKey="non-commercial-and-evaluation"
-      @afterChange="afterChange"
-    ></hot-table>
+    <app-handsontable
+      :hotColumns="hot_columns"
+      :hotData="hot_data"
+      @change="change"
+    ></app-handsontable>
   </div>
 </template>
 
 <script>
-// import Handsontable from "handsontable";
-import "handsontable/dist/handsontable.full.css";
 import { mapGetters } from "vuex";
-import { HotTable } from "@handsontable/vue";
+import AppHandsontable from "components/app_handsontable";
 
 export default {
   components: {
-    HotTable,
+    AppHandsontable,
   },
-  async mounted() {
-    await this.$store.dispatch("load_assigns");
-    console.log("store!", this.$store);
-    console.log("getters!", this.$store.getters);
-    console.log("attension!", this.hot_data);
-    this.$refs.hot.hotInstance.loadData(this.hot_data);
+  mounted() {
+    this.$store.dispatch("load_assigns");
   },
   computed: {
-    hot_columns() {
-      return this.$store.getters.hot_columns;
-    },
-    hot_data() {
-      this.$store.getters.hot_data;
-    },
+    ...mapGetters(["hot_data", "hot_columns"]),
   },
   methods: {
-    afterChange(change, source) {
-      console.log(change, source);
+    change(cell) {
+      console.log(cell);
     }
   }
-  // async mounted() {
-  //   const { getters } = await this.$store;
-  //   document.hot = new Handsontable(this.$refs.hot, getters.hot_settings);
-  // },
 }
 </script>
 
 <style scoped>
-body {
-  font-family: Meiryo;
-  margin-top: 72px;
-  margin-bottom: 72px;
-}
-
-.handsontable {
-  font-size: 12px;
-}
-
-.handsontable th, .handsontable td {
-  height: 12px;
-}
-
-ul.nav.nav-tabs {
-  margin-bottom: 8px;
-}
-
 </style>

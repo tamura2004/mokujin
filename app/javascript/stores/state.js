@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 
 const state = {
-  assigns: null,
+  assigns: [],
   startMonth: dayjs().format("YYYY-MM-DD"),
 };
 

@@ -1,7 +1,8 @@
 import hot_columns  from "getters/hot_columns";
+import months  from "getters/months";
 
 test("generate handsontable settings columns", () => {
-  const got = hot_columns("2020-08-16");
+  const got = hot_columns("2020-08-16", { months: months({}) });
 
   const want = [
     { title: "案件", data: "project_name" },

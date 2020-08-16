@@ -5,11 +5,13 @@
 // like app/views/layouts/application.html.erb.
 // All it does is render <div>Hello Vue</div> at the bottom of the page.
 
-import Vue from 'vue'
-import App from '../app.vue'
+import Vue from 'vue';
+import store from "../stores/store.js";
+import App from '../app.vue';
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
+    store,
     render: h => h(App)
   }).$mount()
   document.body.appendChild(app.$el)

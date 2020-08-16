@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 
 export default function hot_data({ assigns }) {
   const acc = {};
+  if (assigns === null) return [];
   for (const assign of assigns) {
     const key = assign.project_name;
     if (!acc[key]) acc[key] = { project_name: key };

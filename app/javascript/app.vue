@@ -1,41 +1,50 @@
 <template>
   <div id="app">
-    <div ref="hot"></div>
+    <hot-table
+      ref="hot"
+      :columns="hot_columns"
+      :data="hot_data"
+      :colHeaders="true"
+      licenseKey="non-commercial-and-evaluation"
+      @afterChange="afterChange"
+    ></hot-table>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import Handsontable from "handsontable";
+// import Handsontable from "handsontable";
 import "handsontable/dist/handsontable.full.css";
-import hot_columns from "./getters/hot_columns";
-import hot_data from "./getters/hot_data";
+import { mapGetters } from "vuex";
+import { HotTable } from "@handsontable/vue";
 
 export default {
-  data() {
-    return {
-      assigns: [],
-      settings: {
-        columns: [],
-        data: [],
-        colHeaders: true,
-        licenseKey: "non-commercial-and-evaluation",
-        afterChange: this.afterChange,
-      }
-    }
+  components: {
+    HotTable,
   },
   async mounted() {
-    this.settings.columns = hot_columns();
-    const { data } = await axios.get("/api/v1/assigns");
-    this.assigns = data;
-    this.settings.data = hot_data(this);
-    document.hot = new Handsontable(this.$refs.hot, this.settings);
+    await this.$store.dispatch("load_assigns");
+    console.log("store!", this.$store);
+    console.log("getters!", this.$store.getters);
+    console.log("attension!", this.hot_data);
+    this.$refs.hot.hotInstance.loadData(this.hot_data);
+  },
+  computed: {
+    hot_columns() {
+      return this.$store.getters.hot_columns;
+    },
+    hot_data() {
+      this.$store.getters.hot_data;
+    },
   },
   methods: {
     afterChange(change, source) {
       console.log(change, source);
-    },
+    }
   }
+  // async mounted() {
+  //   const { getters } = await this.$store;
+  //   document.hot = new Handsontable(this.$refs.hot, getters.hot_settings);
+  // },
 }
 </script>
 

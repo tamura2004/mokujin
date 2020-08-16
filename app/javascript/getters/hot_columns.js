@@ -1,8 +1,6 @@
-import months from "./months";
-
-export default function hot_columns() {
+export default function hot_columns(state, { months }) {
   const acc = [{ title: "案件", data: "project_name" }];
-  for (const month of months()) {
+  for (const month of months) {
     acc.push({
       title: month,
       data: month + ".cost",

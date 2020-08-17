@@ -1,7 +1,5 @@
 <template>
-  <div id="app">
-    <div ref="hot"></div>
-  </div>
+  <div id="hot" ref="hot"></div>
 </template>
 
 <script>
@@ -20,17 +18,18 @@ export default {
     }
   },
   mounted() {
+    const { hotColumns: columns, hotData: data } = this;
     this.hot = new Handsontable(this.$refs.hot, {
-      licenseKey: "non-commercial-and-evaluation",      
+      columns,
+      data,
       colHeaders: true,
-      columns: this.hotColumns,
-      data: this.hotData,
+      licenseKey: "non-commercial-and-evaluation",
       afterChange: this.afterChange,
     })
   },
   watch: {
     hotData(newData) {
-      this.hot.loadData(newData); 
+      this.hot.loadData(newData);
     }
   },
   methods: {
@@ -40,7 +39,7 @@ export default {
 
       const rows = this.hot.getSourceData();
       for (const [row, name, oldVal, newVal] of changes) {
-        // name := "10月.cost" -> col := "10月"
+        // example: "10月.cost" -> "10月"
         const col = name.replace(/\..*$/,"");
         const cell = rows[row][col];
         this.$emit("change", { row, col, cell });

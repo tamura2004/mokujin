@@ -3,6 +3,7 @@
     <app-chart
       :title="title"
       :chart_data="chart_data"
+      :height="300"
     ></app-chart>
     <app-handsontable
       :hotColumns="hot_columns"
@@ -48,7 +49,4 @@ export default {
 </script>
 
 <style scoped>
-#chart {
-  height: 400px;
-}
 </style>

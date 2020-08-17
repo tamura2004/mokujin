@@ -1,25 +1,38 @@
 <template>
-  <div id="app">
-    <div id="chart" ref="chart"></div>
-  </div>
+  <div
+    id="chart"
+    ref="chart"
+    :style="{ height: height + 'px' }"
+  ></div>
 </template>
 
 <script>
 import CanvasJS from "canvasjs.min";
 
 export default {
-  props: ["title", "chart_data"],
+  props: [
+    "title",
+    "chart_data",
+    "height",
+  ],
+  data() {
+    return {
+      chart: null,
+    }
+  },
   mounted() {
-    document.chart = new CanvasJS.Chart(this.$refs.chart, {
-      title: this.title,
-      data: this.chart_data,
+    const { title, chart_data: data, height } = this;
+    this.chart = new CanvasJS.Chart(this.$refs.chart, {
+      title,
+      data,
+      height,
     });
-    document.chart.render();
+    this.chart.render();
   },
   watch: {
     chart_data() {
-      document.chart.options.data = this.chart_data;
-      document.chart.render();
+      this.chart.options.data = this.chart_data;
+      this.chart.render();
     }
   }
 }
@@ -27,6 +40,7 @@ export default {
 
 <style scoped>
 #chart {
-  height: 400px;
+  margin-bottom: 20px;
 }
+
 </style>
